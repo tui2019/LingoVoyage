@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpenText, MessageCircleMore, Brain, NotebookPen } from "lucide-react";
+import { BookOpenText, MessageCircleMore, Clapperboard } from "lucide-react";
 import TopicPicker from '../components/TopicPicker.jsx';
 
 function Home() {
@@ -31,10 +31,9 @@ function Home() {
       </div>
 
       <div className={`home-content-right ${selectedTopic ? '' : 'home-content-right-disabled'}`}>
-        <div onClick={() => navigate('/new_words')} className="lesson-button lesson-button-1"><BookOpenText className="lesson-button-icon" /><span className="lesson-button-text">Learn words</span></div>
-        <div onClick={() => navigate('/words_in_context')} className="lesson-button lesson-button-2"><MessageCircleMore className="lesson-button-icon" /><span className="lesson-button-text">Words in context</span></div>
-        <div onClick={() => navigate('/practice')} className="lesson-button lesson-button-3"><Brain className="lesson-button-icon" /><span className="lesson-button-text">Practice</span></div>
-        <div onClick={() => navigate('/quiz')} className="lesson-button lesson-button-4"><NotebookPen className="lesson-button-icon" /><span className="lesson-button-text">Quiz</span></div>
+        <div onClick={() => navigate('/practice')} className="lesson-button lesson-button-1 lesson-button-disablable"><BookOpenText className="lesson-button-icon" /><span className="lesson-button-text">Practice</span></div>
+        <div onClick={() => navigate('/words_in_context')} className="lesson-button lesson-button-2 lesson-button-disablable"><MessageCircleMore className="lesson-button-icon" /><span className="lesson-button-text">Words in context</span></div>
+        <div onClick={() => navigate('/words_from_videos')} className="lesson-button lesson-button-3"><Clapperboard className="lesson-button-icon" /><span className="lesson-button-text">Learn words from videos</span></div>
       </div>
       <TopicPicker isOpen={isOpen} topicList={topics} currentTopic={selectedTopic} changeTopic={handleTopicChange} />
     </div>

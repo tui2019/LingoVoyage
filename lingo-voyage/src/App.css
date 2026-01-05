@@ -201,14 +201,8 @@
     justify-content: space-between;
 }
 .lesson-button-3 {
-    background: linear-gradient(160deg, #4facfe, #00f2fe);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.lesson-button-4 {
     border-radius: 0 0 4rem 4rem;
-    background: linear-gradient(160deg, #00f2fe, #43e97b);
+    background: linear-gradient(160deg, #4facfe, #00f2fe);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -242,7 +236,7 @@
     transform: translateX(-15px);
     font-weight: 700;
 }
-.home-content-right-disabled div {
+.home-content-right-disabled .lesson-button-disablable {
     background: linear-gradient(160deg, #555555, #777777);
     opacity: 0.5;
     pointer-events: none;
