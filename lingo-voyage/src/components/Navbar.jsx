@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-function Navbar() {
+function Navbar({ user }) {
 
   const navigate = useNavigate();
   return (
@@ -9,6 +9,11 @@ function Navbar() {
       <div className="navbar-buttons">
         <button onClick={() => navigate('/')}>Home</button>
         <button onClick={() => navigate('/settings')}>Settings</button>
+        {user ? (
+            <span>Welcome, {user.username}</span>
+          ) : (
+            <button onClick={() => navigate('/login')}>Login</button>
+          )}
       </div>
     </nav>
   );
