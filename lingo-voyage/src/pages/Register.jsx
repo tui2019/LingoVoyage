@@ -1,7 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useAuth } from '../contexts/AuthContext.jsx';
 
-function Register({ setUser }) {
+function Register() {
+  const { setUser } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -25,7 +27,7 @@ function Register({ setUser }) {
 
       if (response.ok) {
         setUser(data.user);
-        navigate("/");
+        navigate("/", { replace: true });
       } else {
         // Handle registration errors
         setError(data.error || "Registration failed");

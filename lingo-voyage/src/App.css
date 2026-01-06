@@ -18,11 +18,23 @@
     font-size: 1.5rem;
     font-weight: bold;
     color: #646cff; /* Vite/React purple-blue */
+    cursor: pointer;
 }
 
 .navbar-buttons {
     display: flex;
     gap: 1rem;
+}
+
+.navbar-profile-icon {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: #242424;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Adjust the root padding so content starts below the navbar */

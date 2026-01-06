@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from '../contexts/AuthContext.jsx';
 
-function Login({ setUser }) {
+function Login() {
+  const { setUser } = useAuth();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -25,7 +28,7 @@ function Login({ setUser }) {
 
       if (response.ok) {
         setUser(data.user);
-        navigate("/");
+        navigate("/", { replace: true });
       } else {
         // Handle "Invalid username/password" errors
         setError(data.error || "Login failed");
