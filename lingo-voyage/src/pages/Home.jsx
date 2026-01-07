@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate, useLoaderData } from 'react-router-dom';
 import { BookOpenText, MessageCircleMore, Clapperboard } from "lucide-react";
 import TopicPicker from '../components/TopicPicker.jsx';
 
 function Home() {
+  const topics = useLoaderData();
+
   const [selectedTopic, changeSelectedTopic] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-  const topics = ['Travel', 'Food', 'Culture', 'Technology', 'Business', 'Health', 'Education', 'Entertainment', 'Sports', 'Environment', 'History', 'Art', 'Science', 'Politics', 'Fashion', 'Music', 'Literature', 'Philosophy', 'Psychology', 'Economics', 'Religion', 'Languages', 'Nature', 'Photography', 'Cinema', 'Theater', 'Architecture', 'Design', 'Fitness', 'Wellness', 'Adventure', 'Relationships', 'Hobbies', 'DIY', 'Gardening', 'Cooking', 'Parenting', 'Travel Tips', 'World News', 'Current Events', 'Social Issues', 'Innovation', 'Startups'];
 
   const handleTopicChange = (topic) => {
     changeSelectedTopic(topic);
@@ -24,15 +25,15 @@ function Home() {
           <h2>Pick a Topic</h2>
           <div className="topic-picker">
             <button className={`topic-button ${selectedTopic === null && "topic-not-selected"}`} onClick={() => setIsOpen(true)}>
-                {selectedTopic ? selectedTopic : 'Select Topic'}
+                {selectedTopic ? selectedTopic.title : 'Select Topic'}
               </button>
           </div>
         </div>
       </div>
 
       <div className={`home-content-right ${selectedTopic ? '' : 'home-content-right-disabled'}`}>
-        <div onClick={() => navigate('/practice')} className="lesson-button lesson-button-1 lesson-button-disablable"><BookOpenText className="lesson-button-icon" /><span className="lesson-button-text">Practice</span></div>
-        <div onClick={() => navigate('/words_in_context')} className="lesson-button lesson-button-2 lesson-button-disablable"><MessageCircleMore className="lesson-button-icon" /><span className="lesson-button-text">Words in context</span></div>
+        <div onClick={() => navigate('/practice', { state: { topic: selectedTopic } })} className="lesson-button lesson-button-1 lesson-button-disablable"><BookOpenText className="lesson-button-icon" /><span className="lesson-button-text">Practice</span></div>
+        <div onClick={() => navigate('/words_in_context', { state: { topic: selectedTopic } })} className="lesson-button lesson-button-2 lesson-button-disablable"><MessageCircleMore className="lesson-button-icon" /><span className="lesson-button-text">Words in context</span></div>
         <div onClick={() => navigate('/words_from_videos')} className="lesson-button lesson-button-3"><Clapperboard className="lesson-button-icon" /><span className="lesson-button-text">Learn words from videos</span></div>
       </div>
       <TopicPicker isOpen={isOpen} topicList={topics} currentTopic={selectedTopic} changeTopic={handleTopicChange} />

@@ -21,11 +21,11 @@ function TopicPicker({ isOpen, topicList, currentTopic, changeTopic }) {
           {topicList.length === 0 && (<p className="modal-no-topics">No topics available</p>)}
           {topicList.map((topic) => (
             <button
-              key={topic}
+              key={topic._id}
               onClick={() => changeTopic(topic)}
               className="topic-button"
             >
-              {topic}
+              {topic.title}
             </button>
           ))}
         </div>
