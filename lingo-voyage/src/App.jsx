@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider, Outlet, useLoaderData } from 'react-router-dom';
 import { useState } from 'react'
-import { checkAuth } from './utils/auth.js';
+import { checkAuth, getUserData } from './utils/auth.js';
 import { AuthContext } from './contexts/AuthContext';
 import './App.css'
 import Home from './pages/Home.jsx'
@@ -14,7 +14,7 @@ import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 
 
-function AuthLayout() {
+function RootLayout() {
   const initialUser = useLoaderData();
 
   const [user, setUser] = useState(initialUser);
@@ -26,42 +26,71 @@ function AuthLayout() {
   );
 }
 
+function RegularLayout() {
+  return (
+    <>
+      <Navbar />
+      <Outlet />
+    </>
+  );
+}
+
+function QuizLayout() {
+  return (
+    <>
+      <QuizNavbar />
+      <Outlet />
+    </>
+  );
+}
+
 const routes = createBrowserRouter([
   {
-    element: <AuthLayout />,
-    loader: checkAuth,
+    element: <RootLayout />,
+    loader: getUserData,
+    path: "/",
     children: [
       {
-        path: "/",
+        // Routes with regular Navbar
+        element: <RegularLayout />,
         loader: checkAuth,
-        element: <><Navbar /><Home /></>,
+        children: [
+          {
+            index: true,
+            element: <Home />,
+          },
+          {
+            path: "settings",
+            element: <Settings />,
+          },
+          {
+            path: "words_from_videos",
+            element: <LearnFromVideos />,
+          },
+        ],
       },
       {
-        path: "/settings",
+        // Routes with QuizNavbar
+        element: <QuizLayout />,
         loader: checkAuth,
-        element: <><Navbar /><Settings /></>,
+        children: [
+          {
+            path: "words_in_context",
+            element: <WordsInContext />,
+          },
+          {
+            path: "practice",
+            element: <Practice />,
+          },
+        ],
       },
       {
-        path: "/words_in_context",
-        loader: checkAuth,
-        element: <><QuizNavbar /><WordsInContext /></>,
-      },
-      {
-        path: "/practice",
-        loader: checkAuth,
-        element: <><QuizNavbar /><Practice /></>,
-      },
-      {
-        path: "/words_from_videos",
-        loader: checkAuth,
-        element: <><Navbar /><LearnFromVideos /></>,
-      },
-      {
-        path: "/login",
+        // Public routes
+        path: "login",
         element: <Login />,
       },
       {
-        path: "/register",
+        path: "register",
         element: <Register />,
       },
     ],
