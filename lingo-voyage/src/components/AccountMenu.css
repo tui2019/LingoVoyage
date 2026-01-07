@@ -1,0 +1,25 @@
+.account-menu-content {
+    position: fixed;
+    top: 5rem;
+    right: 1rem;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    height: 20rem;
+    width: 15rem;
+}
+
+.account-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9998;
+}
