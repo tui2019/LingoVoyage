@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider, Outlet, useLoaderData } from 'react-router-dom';
 import { useState } from 'react'
 import { checkAuth, getUserData } from './utils/auth.js';
+import { fetchTopics } from './utils/topics.js';
 import { AuthContext } from './contexts/AuthContext';
 import './App.css'
 import Home from './pages/Home.jsx'
@@ -58,6 +59,7 @@ const routes = createBrowserRouter([
           {
             index: true,
             element: <Home />,
+            loader: fetchTopics,
           },
           {
             path: "settings",
