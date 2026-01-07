@@ -12,14 +12,8 @@ function Navbar() {
     <nav className="navbar">
       <div className="navbar-logo" onClick={() => navigate('/')}>LingoVoyage</div>
       <div className="navbar-buttons">
-        {user ? (
-          <>
-            <div className="navbar-profile-icon" onClick={() => setIsAccountMenuOpen(!isAccountMenuOpen)}><User /></div>
-            <AccountMenu isOpen={isAccountMenuOpen} closeMenu={() => setIsAccountMenuOpen(false)} user={user} />
-          </>
-            ) : (
-            <button onClick={() => navigate('/login')}>Login</button>
-          )}
+        <div className="navbar-profile-icon" onClick={() => setIsAccountMenuOpen(!isAccountMenuOpen)}><User /></div>
+        <AccountMenu isOpen={isAccountMenuOpen} closeMenu={() => setIsAccountMenuOpen(false)} user={user} />
       </div>
     </nav>
   );
