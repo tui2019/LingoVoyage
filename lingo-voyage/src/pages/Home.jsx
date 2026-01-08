@@ -1,20 +1,27 @@
-import { useState } from 'react';
-import { useNavigate, useLoaderData } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useLocation, useNavigate, useLoaderData } from 'react-router-dom';
 import { BookOpenText, MessageCircleMore, Clapperboard } from "lucide-react";
 import TopicPicker from '../components/TopicPicker.jsx';
 
 function Home() {
+  const location = useLocation();
   const topics = useLoaderData();
+  const navigate = useNavigate();
 
-  const [selectedTopic, changeSelectedTopic] = useState(null);
+  const [selectedTopic, changeSelectedTopic] = useState(location.state?.topic || null);
   const [isOpen, setIsOpen] = useState(false);
 
+  useEffect(() => {
+      if (location.state?.topic) {
+        navigate(location.pathname, { replace: true, state: {} });
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
   const handleTopicChange = (topic) => {
     changeSelectedTopic(topic);
     setIsOpen(false);
   }
 
-  const navigate = useNavigate();
   return (
     <div className="home-layout">
 

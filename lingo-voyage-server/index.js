@@ -8,6 +8,7 @@ import Topic from './models/Topic.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { verifyToken } from './middleware/auth.js';
+import { saveTopic } from './services/saveTopic.js';
 
 import fs from 'fs';
 import path from 'path';
@@ -111,18 +112,27 @@ app.post('/api/login', async (req, res) => {
 
 app.post('/api/topics', verifyToken, async (req, res) => {
   try {
-    const { name, language } = req.body;
-    const newTopic = new Topic({
-        title: name,
-        language,
-        owner: req.user.id
-    });
-    const savedTopic = await newTopic.save();
-    res.status(201).json(savedTopic);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to create topic" });
-  }
+      // Get the user's API key
+      const user = await User.findById(req.user.id);
+      if (!user || !user.aiApiKey) {
+        return res.status(400).json({
+          error: "Gemini API key not found. Please set your API key in your profile settings."
+        });
+      }
+
+      // Let the service handle everything
+      const result = await saveTopic(
+        req.body,
+        req.user.id,
+        { mainLanguage: user.mainLanguage, targetLanguage: user.targetLanguage },
+        user.aiApiKey
+      );
+
+      res.status(201).json(result);
+    } catch (err) {
+      console.error('Error creating topic:', err);
+      res.status(500).json({ error: err.message || "Failed to create topic" });
+    }
 });
 
 

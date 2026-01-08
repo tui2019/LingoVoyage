@@ -1,7 +1,10 @@
 import { createPortal } from 'react-dom';
+import { useNavigate } from 'react-router-dom';
 import './TopicPicker.css';
 
 function TopicPicker({ isOpen, topicList, currentTopic, changeTopic }) {
+  const navigate = useNavigate();
+
   if (!isOpen) return null;
 
   return createPortal(
@@ -13,7 +16,7 @@ function TopicPicker({ isOpen, topicList, currentTopic, changeTopic }) {
         </button>
         <h2 className="modal-title">Select a Topic</h2>
         <div className="modal-new-button">
-          <button className="topic-button topic-generate-new">
+          <button onClick={() => navigate('/new_topic')} className="topic-button topic-generate-new">
             Generate New Topic
           </button>
         </div>

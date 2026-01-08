@@ -11,6 +11,7 @@ import QuizNavbar from './components/QuizNavbar.jsx';
 import WordsInContext from './pages/WordsInContext.jsx';
 import Practice from './pages/Practice.jsx';
 import LearnFromVideos from './pages/LearnFromVideos.jsx';
+import NewTopic from './pages/NewTopic.jsx';
 import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 
@@ -68,6 +69,10 @@ const routes = createBrowserRouter([
           {
             path: "words_from_videos",
             element: <LearnFromVideos />,
+          },
+          {
+            path: "new_topic",
+            element: <NewTopic />,
           },
         ],
       },

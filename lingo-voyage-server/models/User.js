@@ -12,6 +12,17 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 8
   },
+  mainLanguage: {
+    type: String,
+    required: true
+  },
+  targetLanguage: {
+    type: String,
+    required: true
+  },
+  aiApiKey: {
+    type: String
+  },
   createdAt: {
     type: Date,
     default: Date.now
