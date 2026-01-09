@@ -119,7 +119,7 @@ async function generateWordExplanations(words, mainLanguage, targetLanguage, api
     const prompt = `You are a language learning assistant helping someone whose native language is ${mainLanguage} learn ${targetLanguage}.
 
 For each of the following ${targetLanguage} words, provide:
-1. A concise translation to ${mainLanguage}, or an explanation if no direct translation exists
+1. A concise translation to ${mainLanguage}, or an explanation if no direct translation exists. If there are multiple valid translations, separate them with " / " (space-slash-space).
 2. Two different example sentences in ${targetLanguage} showing natural usage
 3. The same two sentences with the target word(s) replaced by gaps using "___". IMPORTANT: If a word is separable (like German separable verbs), use multiple "___" blanks to show where each part appears in the sentence.
 
@@ -170,7 +170,7 @@ async function generateWordsFromTopic(topic, mainLanguage, targetLanguage, apiKe
 Generate exactly 10 useful ${targetLanguage} vocabulary words related to the topic "${topic}".${contextNote}
 
 For each word, provide:
-1. A concise translation to ${mainLanguage}, or an explanation if no direct translation exists
+1. A concise translation to ${mainLanguage}, or an explanation if no direct translation exists. If there are multiple valid translations, separate them with " / " (space-slash-space).
 2. Two different example sentences in ${targetLanguage} showing natural usage
 3. The same two sentences with the target word(s) replaced by gaps using "___". IMPORTANT: If a word is separable (like German separable verbs), use multiple "___" blanks to show where each part appears in the sentence.
 

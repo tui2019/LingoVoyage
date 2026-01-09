@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import User from './models/User.js';
 import Topic from './models/Topic.js';
+import Word from './models/Word.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { verifyToken } from './middleware/auth.js';
@@ -142,6 +143,28 @@ app.get('/api/topics', verifyToken, async (req, res) => {
     res.json(userTopics);
   } catch (err) {
     res.status(500).json({ error: "Could not fetch topics" });
+  }
+});
+app.get('/api/topics/:topicId/words', verifyToken, async (req, res) => {
+  try {
+    const { topicId } = req.params;
+
+    console.log(topicId);
+    console.log(req.user.id);
+
+    const topic = await Topic.findOne({ _id: topicId, owner: req.user.id });
+    console.log(topic);
+    if (!topic) {
+      return res.status(404).json({ error: "Topic not found" });
+    }
+
+    const words = await Word.find({ topic: topicId });
+    console.log(words);
+    res.json(words);
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Could not fetch words" });
   }
 });
 app.get('/api/check-auth', (req, res) => {
