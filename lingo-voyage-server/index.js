@@ -27,17 +27,22 @@ if (!fs.existsSync(envPath)) {
     if (fs.existsSync(examplePath)) {
         let content = fs.readFileSync(examplePath, 'utf8');
 
-        // Find a placeholder like "YOUR_SECRET_HERE" and replace it with a real random string
-        const randomSecret = crypto.randomBytes(32).toString('hex');
+        // Generate secrets
+        const randomSecret = crypto.randomBytes(32).toString('hex');         // JWT secret (hex)
+        const fieldEncKeyB64 = crypto.randomBytes(32).toString('base64');    // 32-byte key, base64
+
+        // Replace placeholders
         content = content.replace('YOUR_SECRET_HERE', randomSecret);
+        content = content.replace('YOUR_FIELD_ENC_KEY_HERE', fieldEncKeyB64);
 
         fs.writeFileSync(envPath, content);
-        console.log('✅ .env file created successfully with a unique JWT_SECRET.');
+        console.log('✅ .env file created successfully with unique JWT_SECRET and FIELD_ENC_KEY.');
         dotenv.config();
     } else {
         console.error('❌ Error: .env.example missing! Cannot auto-create .env.');
     }
 }
+
 
 const app = express();
 
@@ -62,11 +67,17 @@ mongoose.connect(process.env.MONGODB_URI)
 
 app.post('/api/register', async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const { username, password, mainLanguage, targetLanguage, aiApiKey } = req.body;
         if (!username || !password) {
           return res.status(400).json({ error: "Username and password are required" });
         }
-        const user = new User({ username, password });
+        if (!mainLanguage || !targetLanguage) {
+          return res.status(400).json({ error: "Main and target languages are required" });
+        }
+        if (!aiApiKey) {
+          return res.status(400).json({ error: "AI API key is required" });
+        }
+        const user = new User({ username, password, mainLanguage, targetLanguage, aiApiKey });
         await user.save();
         const token = jwt.sign({ id: user._id, username: user.username }, process.env.JWT_SECRET, { expiresIn: '7d' });
         // res.status(201).json({ token });
@@ -113,27 +124,34 @@ app.post('/api/login', async (req, res) => {
 
 app.post('/api/topics', verifyToken, async (req, res) => {
   try {
-      // Get the user's API key
-      const user = await User.findById(req.user.id);
-      if (!user || !user.aiApiKey) {
-        return res.status(400).json({
-          error: "Gemini API key not found. Please set your API key in your profile settings."
-        });
-      }
+    const userId = req.user.id; // adjust if your middleware sets a different field
 
-      // Let the service handle everything
-      const result = await saveTopic(
-        req.body,
-        req.user.id,
-        { mainLanguage: user.mainLanguage, targetLanguage: user.targetLanguage },
-        user.aiApiKey
-      );
-
-      res.status(201).json(result);
-    } catch (err) {
-      console.error('Error creating topic:', err);
-      res.status(500).json({ error: err.message || "Failed to create topic" });
+    // Explicitly select the encrypted key (hidden by default) and languages
+    const user = await User.findById(userId).select('+aiApiKeyCiphertext');
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
     }
+
+    const apiKey = user.getAiApiKey();
+    if (!apiKey) {
+      return res.status(400).json({
+        error: 'API key is required. Please set your Gemini API key in your profile.'
+      });
+    }
+
+    const data = req.body; // { topic, entryMode, comment, words }
+    const result = await saveTopic(
+      data,
+      userId,
+      { mainLanguage: user.mainLanguage, targetLanguage: user.targetLanguage },
+      apiKey
+    );
+
+    res.json(result);
+  } catch (err) {
+    // Keep errors generic; never leak secrets
+    res.status(500).json({ error: err.message || 'Failed to create topic' });
+  }
 });
 
 
