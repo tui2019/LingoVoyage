@@ -14,11 +14,8 @@
     box-sizing: border-box;
 }
 
-.navbar-logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #646cff; /* Vite/React purple-blue */
-    cursor: pointer;
+.navbar-logo svg {
+    width: 3rem;
 }
 
 .navbar-buttons {

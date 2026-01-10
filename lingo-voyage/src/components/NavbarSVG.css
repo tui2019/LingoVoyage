@@ -1,0 +1,35 @@
+.lingo-voyage-svg * {
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+/* THE L-GROUP LOGIC */
+.l-letter-group {
+    /* No transition here = instant reset when hover ends */
+    transform: rotate(0deg);
+}
+
+.lingo-voyage-svg:hover .l-letter-group {
+    transform: rotate(360deg);
+    /* Transition only applies during hover */
+    /* 0.8s duration with a 'Back' ease for a smooth snap */
+    transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* BUBBLE and V-PATH (Standard smooth transitions) */
+.bubble-animator,
+.v-path {
+    transition: transform 0.4s ease-out;
+}
+
+.lingo-voyage-svg:hover .bubble-animator {
+    transform: translateY(-8px) scale(1.05);
+}
+
+.lingo-voyage-svg:hover .v-path {
+    transform: scale(1.05);
+}
+
+.lingo-voyage-svg {
+    cursor: pointer;
+}

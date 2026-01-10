@@ -157,8 +157,9 @@ function PracticeComponent({ word, setCorrectCount, reverse = false, isLastQuest
       {/* Show answer section */}
       {showAnswer && (
         <div style={{
-          marginTop: '20px',
+          marginTop: '10px',
           padding: '15px',
+          borderLeft: '4px solid #FF9800',
           borderRadius: '4px'
         }}>
           <p><strong>Answer:</strong> {answerText}</p>
