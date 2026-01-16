@@ -54,6 +54,7 @@ function WordsInContext() {
 
   return (
     <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}>
+      <title>LingoVoyage - Practice</title>
       <h2>Words in Context: {topic.title}</h2>
       <p style={{ color: '#666' }}>Word {currentIndex + 1} of {words.length}</p>
 

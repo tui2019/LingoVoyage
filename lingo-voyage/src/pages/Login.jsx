@@ -100,6 +100,7 @@ function Login() {
 
   return (
     <div style={styles.container}>
+      <title>LingoVoyage - Login</title>
       <div style={styles.card}>
         <h2 style={{ marginBottom: "1.5rem" }}>Login</h2>
 

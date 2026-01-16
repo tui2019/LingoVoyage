@@ -154,6 +154,58 @@ app.post('/api/topics', verifyToken, async (req, res) => {
   }
 });
 
+app.get('/api/settings', verifyToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.json({
+      mainLanguage: user.mainLanguage,
+      targetLanguage: user.targetLanguage,
+      aiApiKeyLast4: user.aiApiKeyLast4
+    });
+  } catch (err) {
+    res.status(500).json({ error: "Could not fetch settings" });
+  }
+});
+
+app.post('/api/settings/save', verifyToken, async (req, res) => {
+  try {
+    const { password, mainLanguage, targetLanguage, aiApiKey } = req.body;
+
+    // Validate at least one field is provided
+    if (!password && !mainLanguage && !targetLanguage && !aiApiKey) {
+      return res.status(400).json({ error: "No changes provided" });
+    }
+
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    if (password) {
+      user.password = password;
+    }
+    if (mainLanguage) {
+      user.mainLanguage = mainLanguage;
+    }
+    if (targetLanguage) {
+      user.targetLanguage = targetLanguage;
+    }
+    if (aiApiKey) {
+      user.aiApiKey = aiApiKey;
+    }
+
+    await user.save();
+
+    res.json({ message: "Settings updated successfully" });
+  } catch (err) {
+    console.error("Settings save error:", err);
+    res.status(500).json({ error: err.message || "Could not save settings" });
+  }
+});
+
 
 app.get('/api/topics', verifyToken, async (req, res) => {
   try {

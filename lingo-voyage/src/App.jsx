@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider, Outlet, useLoaderData } from 'reac
 import { useState } from 'react'
 import { checkAuth, getUserData } from './utils/auth.js';
 import { fetchTopics } from './utils/topics.js';
+import { fetchSettings } from './utils/settings.js';
 import { AuthContext } from './contexts/AuthContext';
 import './App.css'
 import Home from './pages/Home.jsx'
@@ -65,6 +66,7 @@ const routes = createBrowserRouter([
           {
             path: "settings",
             element: <Settings />,
+            loader: fetchSettings,
           },
           {
             path: "words_from_videos",

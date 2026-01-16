@@ -127,6 +127,7 @@ function Register() {
 
   return (
     <div style={styles.container}>
+      <title>LingoVoyage - Register</title>
       <div style={styles.card}>
         <h2 style={{ textAlign: "center", marginBottom: "1.5rem" }}>Join LingoVoyage</h2>
 
@@ -236,7 +237,9 @@ function Register() {
               id="aiApiKey"
               name="aiApiKey"
               type="password"
-              autoComplete="off"
+              autoComplete="one-time-code"
+              data-lpignore="true"
+              data-form-type="other"
               style={styles.input}
               value={aiApiKey}
               onChange={(e) => setAiApiKey(e.target.value)}

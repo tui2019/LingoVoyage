@@ -14,8 +14,9 @@
     box-sizing: border-box;
 }
 
-.navbar-logo svg {
+.navbar-logo img {
     width: 3rem;
+    cursor: pointer;
 }
 
 .navbar-buttons {

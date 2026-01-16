@@ -61,7 +61,8 @@ function Practice() {
 
   return (
     <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}>
-          <h2>Practice: {topic.title}</h2>
+      <title>LingoVoyage - Practice</title>
+      <h2>Practice: {topic.title}</h2>
           <p style={{ color: '#666' }}>Word {currentIndex + 1} of {totalQuestions}</p>
 
       <PracticeComponent word={actualWord} setCorrectCount={setCorrectCount} reverse={isReverse} key={`${actualWord._id}-${isReverse}`} isLastQuestion={isLastQuestion} nextQuestion={handleNext} showResults={() => setShowResults(true)} />
