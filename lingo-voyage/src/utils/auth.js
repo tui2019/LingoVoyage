@@ -3,7 +3,7 @@ import { redirect } from "react-router-dom";
 // For parent layout - just returns user data or null, no redirect
 export async function getUserData() {
   try {
-    const res = await fetch("http://localhost:4000/api/check-auth", { credentials: "include" });
+    const res = await fetch("http://127.0.0.1:4000/api/check-auth", { credentials: "include" });
     const data = await res.json();
 
     if (!data.authenticated) {

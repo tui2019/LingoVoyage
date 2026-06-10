@@ -20,7 +20,7 @@ function WordsInContext() {
       } else {
         try {
           const response = await fetch(
-            `http://localhost:4000/api/topics/${topic._id}/words`,
+            `http://127.0.0.1:4000/api/topics/${topic._id}/words`,
             { credentials: "include" }
           );
           if (!response.ok) {

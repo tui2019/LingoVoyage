@@ -1,6 +1,6 @@
 export async function fetchSettings() {
   try {
-    const res = await fetch("http://localhost:4000/api/settings", {
+    const res = await fetch("http://127.0.0.1:4000/api/settings", {
       credentials: "include"
     });
     

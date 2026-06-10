@@ -4,7 +4,7 @@ import { checkAuth, getUserData } from './utils/auth.js';
 import { fetchTopics } from './utils/topics.js';
 import { fetchSettings } from './utils/settings.js';
 import { AuthContext } from './contexts/AuthContext';
-import './App.css'
+// import './App.css'
 import Home from './pages/Home.jsx'
 import Settings from './pages/Settings.jsx'
 import Navbar from './components/Navbar.jsx'

@@ -8,7 +8,7 @@ function AccountMenu({ isOpen, closeMenu, user }) {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://localhost:4000/api/logout", {
+      const response = await fetch("http://127.0.0.1:4000/api/logout", {
         method: "POST",
         credentials: "include",
       });

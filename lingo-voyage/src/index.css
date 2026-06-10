@@ -1,68 +1,260 @@
+/* Voyage UI Library
+    A technical, dark-themed UI system with "Flashlight" depth and 3D interactions.
+*/
+
 :root {
-    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
+    --bg-dark: hsl(0, 0%, 0%);
+    --bg: hsl(0, 0%, 5%);
+    --bg-light: hsl(0, 0%, 10%);
+    --text: hsl(0, 0%, 95%);
+    --text-muted: hsl(0, 0%, 70%);
+    --accent: hsl(355, 100%, 69%);
+    --accent-dark: hsl(355, 100%, 45%);
 
-    color-scheme: light dark;
-    color: rgba(255, 255, 255, 0.87);
-    background-color: #242424;
+    --shine-top: hsla(0, 0%, 100%, 0.15);
+    --shine-hover: hsla(0, 0%, 100%, 0.25);
+    --shine-focus: hsla(0, 0%, 100%, 0.35);
 
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    --accent-green: hsl(155, 55%, 40%);
+    --accent-green-dark: hsl(155, 55%, 25%);
+    --accent-blue: hsl(210, 35%, 45%);
+    --accent-blue-dark: hsl(210, 35%, 30%);
+
+    --font-sans: -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-logo: "Rammetto One", cursive;
 }
-
-a {
-    font-weight: 500;
-    color: #646cff;
-    text-decoration: inherit;
-}
-a:hover {
-    color: #535bf2;
-}
-
-body {
-    margin: 0;
-    /*display: flex;*/
-    place-items: center;
-    min-width: 320px;
+#root {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     min-height: 100vh;
-}
-
-h1 {
-    font-size: 3.2em;
-    line-height: 1.1;
-}
-
-button {
-    border-radius: 8px;
-    border: 1px solid transparent;
-    padding: 0.6em 1.2em;
-    font-size: 1em;
+    background-color: var(--bg-dark);
+    font-family: var(--font-sans);
     font-weight: 500;
-    font-family: inherit;
-    background-color: #1a1a1a;
-    cursor: pointer;
-    transition: border-color 0.25s;
-}
-button:hover {
-    border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-    outline: 4px auto -webkit-focus-ring-color;
+    color: var(--text);
+    margin: 0;
+    padding-top: 80px;
 }
 
-@media (prefers-color-scheme: light) {
-    :root {
-        color: #213547;
-        background-color: #ffffff;
-    }
-    a:hover {
-        color: #747bff;
-    }
-    button {
-        background-color: #f9f9f9;
-    }
+/* --- Cards --- */
+.v-card {
+    background:
+        linear-gradient(var(--bg), var(--bg)) padding-box,
+        linear-gradient(to bottom, var(--shine-top), var(--bg-light)) border-box;
+    border: 1px solid transparent;
+    width: 100%;
+    max-width: 480px;
+    padding: 2.5rem;
+    box-sizing: border-box;
+    border-radius: 12px;
+    box-shadow:
+        0 -15px 30px hsla(0, 0%, 100%, 0.04),
+        0 30px 60px hsla(0, 0%, 0%, 0.9);
+}
+
+/* --- Typography & Links --- */
+.v-label {
+    display: block;
+    margin-bottom: 0.6rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.v-link {
+    color: var(--accent);
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.v-link:hover {
+    text-decoration: underline;
+    opacity: 0.9;
+}
+
+/* --- Inputs --- */
+.v-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 0.95rem;
+    box-sizing: border-box;
+    outline: none;
+    transition: all 0.3s ease;
+    background:
+        linear-gradient(var(--bg-light), var(--bg-light)) padding-box,
+        linear-gradient(to bottom, hsla(0, 0%, 100%, 0.12), hsla(0, 0%, 100%, 0.05)) border-box;
+    box-shadow:
+        0 -1px 3px hsla(0, 0%, 100%, 0.01),
+        0 3px 6px hsla(0, 0%, 0%, 0.4);
+}
+
+.v-input:hover {
+    background:
+        linear-gradient(var(--bg-light), var(--bg-light)) padding-box,
+        linear-gradient(to bottom, var(--shine-hover), hsla(0, 0%, 100%, 0.1)) border-box;
+    box-shadow:
+        0 -1px 4px hsla(0, 0%, 100%, 0.02),
+        0 4px 10px hsla(0, 0%, 0%, 0.5);
+}
+
+.v-input:focus {
+    background:
+        linear-gradient(var(--bg-light), var(--bg-light)) padding-box,
+        linear-gradient(to bottom, var(--shine-focus), hsla(0, 0%, 100%, 0.15)) border-box;
+    box-shadow:
+        0 -1px 5px hsla(0, 0%, 100%, 0.04),
+        0 6px 12px hsla(0, 0%, 0%, 0.6);
+}
+
+/* Select extension for custom arrow */
+select.v-input {
+    appearance: none;
+    padding-right: 44px;
+    cursor: pointer;
+    background:
+        url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23707070' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 16px center / 12px 8px,
+        linear-gradient(var(--bg-light), var(--bg-light)) padding-box,
+        linear-gradient(to bottom, hsla(0, 0%, 100%, 0.12), hsla(0, 0%, 100%, 0.05)) border-box;
+}
+
+select.v-input:hover {
+    background:
+        url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23B3B3B3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 16px center / 12px 8px,
+        linear-gradient(var(--bg-light), var(--bg-light)) padding-box,
+        linear-gradient(to bottom, var(--shine-hover), hsla(0, 0%, 100%, 0.1)) border-box;
+}
+
+select.v-input:focus {
+    background:
+        url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23FFFFFF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 16px center / 12px 8px,
+        linear-gradient(var(--bg-light), var(--bg-light)) padding-box,
+        linear-gradient(to bottom, var(--shine-focus), hsla(0, 0%, 100%, 0.15)) border-box;
+}
+
+/* --- Buttons --- */
+.v-btn {
+    width: 100%;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 1rem;
+    font-weight: 700;
+    transition: all 0.2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+    transform: translateY(0);
+    box-sizing: border-box;
+}
+
+/* 3D Button - Accent (Red) */
+.v-btn-accent {
+    background:
+        linear-gradient(var(--accent), var(--accent)) padding-box,
+        linear-gradient(to bottom, hsla(355, 100%, 85%, 0.4), hsla(355, 100%, 20%, 0.2)) border-box;
+    box-shadow:
+        0 4px 0 var(--accent-dark),
+        0 6px 12px hsla(0, 0%, 0%, 0.45);
+}
+
+.v-btn-accent:hover {
+    transform: translateY(-1px);
+    background:
+        linear-gradient(var(--accent), var(--accent)) padding-box,
+        linear-gradient(to bottom, hsla(355, 100%, 90%, 0.5), hsla(355, 100%, 20%, 0.25)) border-box;
+    box-shadow:
+        0 5px 0 var(--accent-dark),
+        0 10px 20px hsla(0, 0%, 0%, 0.5);
+}
+
+.v-btn-accent:active {
+    transform: translateY(4px);
+    box-shadow:
+        0 0px 0 var(--accent-dark),
+        0 2px 4px hsla(0, 0%, 0%, 0.4);
+    transition: all 0.1s ease;
+}
+
+/* 3D Button - Gray */
+.v-btn-gray {
+    background:
+        linear-gradient(var(--bg-light), var(--bg-light)) padding-box,
+        linear-gradient(to bottom, hsla(0, 0%, 100%, 0.15), hsla(0, 0%, 0%, 0.2)) border-box;
+    box-shadow:
+        0 4px 0 var(--bg-dark),
+        0 6px 12px hsla(0, 0%, 0%, 0.45);
+}
+
+.v-btn-gray:hover {
+    transform: translateY(-1px);
+    background:
+        linear-gradient(var(--bg-light), var(--bg-light)) padding-box,
+        linear-gradient(to bottom, hsla(0, 0%, 100%, 0.2), hsla(0, 0%, 0%, 0.25)) border-box;
+    box-shadow:
+        0 5px 0 var(--bg-dark),
+        0 10px 20px hsla(0, 0%, 0%, 0.5);
+}
+
+.v-btn-gray:active {
+    transform: translateY(4px);
+    box-shadow:
+        0 0px 0 var(--bg-dark),
+        0 2px 4px hsla(0, 0%, 0%, 0.4);
+    transition: all 0.1s ease;
+}
+
+/* -------- Home Page Mission Buttons -------- */
+
+/**
+ * Mission Button Base Class
+ * Use with color classes: v-btn-mission v-btn-green/blue/red
+ */
+.v-btn-mission {
+    --btn-shadow: var(--bg-dark);
+    box-shadow:
+        0 4px 0 var(--btn-shadow),
+        0 6px 12px rgba(0, 0, 0, 0.45);
+}
+
+.v-btn-mission:hover {
+    transform: translateY(-1px);
+    box-shadow:
+        0 5px 0 var(--btn-shadow),
+        0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.v-btn-mission:active {
+    transform: translateY(4px);
+    box-shadow:
+        0 0px 0 var(--btn-shadow),
+        0 2px 4px rgba(0, 0, 0, 0.4);
+    transition: all 0.1s ease;
+}
+
+/* Mission Button Color Variants */
+.v-btn-green {
+    --btn-shadow: var(--accent-green-dark);
+    background:
+        linear-gradient(var(--accent-green), var(--accent-green)) padding-box,
+        linear-gradient(to bottom, hsla(155, 55%, 80%, 0.2), hsla(155, 55%, 10%, 0.2)) border-box;
+}
+
+.v-btn-blue {
+    --btn-shadow: var(--accent-blue-dark);
+    background:
+        linear-gradient(var(--accent-blue), var(--accent-blue)) padding-box,
+        linear-gradient(to bottom, hsla(210, 35%, 80%, 0.2), hsla(210, 35%, 10%, 0.2)) border-box;
+}
+
+.v-btn-red {
+    --btn-shadow: var(--accent-dark);
+    background:
+        linear-gradient(var(--accent), var(--accent)) padding-box,
+        linear-gradient(to bottom, hsla(355, 100%, 85%, 0.2), hsla(355, 100%, 20%, 0.2)) border-box;
 }

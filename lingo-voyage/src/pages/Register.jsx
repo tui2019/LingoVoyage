@@ -36,7 +36,7 @@ function Register() {
     const finalTargetLanguage = targetLanguage === "Other" ? manualTarget : targetLanguage;
 
     try {
-      const response = await fetch("http://localhost:4000/api/register", {
+      const response = await fetch("http://127.0.0.1:4000/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -63,197 +63,131 @@ function Register() {
     }
   };
 
-  const styles = {
-    container: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      minHeight: "90vh",
-      padding: "40px 20px"
-    },
-    card: {
-      backgroundColor: "#242424",
-      padding: "2rem",
-      borderRadius: "12px",
-      width: "450px",
-      boxShadow: "0 10px 25px rgba(0,0,0,0.3)",
-      color: "#ffffff",
-      boxSizing: "border-box"
-    },
-    inputGroup: {
-      marginBottom: "1.2rem",
-      textAlign: "left"
-    },
-    label: {
-      display: "block",
-      marginBottom: "0.5rem",
-      fontSize: "0.85rem",
-      color: "#bbb"
-    },
-    input: {
-      width: "100%",
-      padding: "10px",
-      backgroundColor: "#1a1a1a",
-      border: "1px solid #333",
-      borderRadius: "6px",
-      color: "white",
-      fontSize: "0.95rem",
-      boxSizing: "border-box",
-      outline: "none"
-    },
-    manualInputWrapper: {
-      overflow: "hidden",
-      transition: "max-height 0.4s ease, opacity 0.4s ease, margin-top 0.4s ease"
-    },
-    button: {
-      width: "100%",
-      padding: "12px",
-      backgroundColor: "#3a3a3a",
-      color: "white",
-      border: "none",
-      borderRadius: "6px",
-      fontSize: "1rem",
-      fontWeight: "bold",
-      cursor: "pointer",
-      marginTop: "1rem"
-    },
-    linkText: {
-      marginTop: "1.5rem",
-      textAlign: "center",
-      fontSize: "0.85rem",
-      color: "#888"
-    }
-  };
-
   return (
-    <div style={styles.container}>
-      <title>LingoVoyage - Register</title>
-      <div style={styles.card}>
-        <h2 style={{ textAlign: "center", marginBottom: "1.5rem" }}>Join LingoVoyage</h2>
+    <div className="v-card">
+      <h2 style={{ textAlign: "center", marginBottom: "1.5rem", marginTop: 0 }}>Join LingoVoyage</h2>
 
-        {error && <p style={{ color: "#ff6b6b", textAlign: "center" }}>{error}</p>}
+      {error && (
+        <p style={{ color: "var(--accent)", textAlign: "center", marginBottom: '1rem', fontSize: '0.9rem' }}>
+          {error}
+        </p>
+      )}
 
-        <form onSubmit={handleRegister}>
-          <div style={styles.inputGroup}>
-            <label htmlFor="username" style={styles.label}>Username</label>
-            <input
-              id="username"
-              name="username"
-              type="text"
-              autoComplete="username"
-              style={styles.input}
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-          </div>
-
-          <div style={styles.inputGroup}>
-            <label htmlFor="password" style={styles.label}>Password</label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              autoComplete="new-password"
-              style={styles.input}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-
-          <div style={styles.inputGroup}>
-            <label htmlFor="mainLanguage" style={styles.label}>Native Language</label>
-            <select
-              id="mainLanguage"
-              style={styles.input}
-              value={mainLanguage}
-              onChange={(e) => setMainLanguage(e.target.value)}
-              required
-            >
-              <option value="" disabled>Select language</option>
-              {popularLanguages.map(l => (
-                <option key={l.name} value={l.name}>{l.flag} {l.name}</option>
-              ))}
-              <option value="Other">🌐 Not on the list...</option>
-            </select>
-            <div style={{
-              ...styles.manualInputWrapper,
-              maxHeight: mainLanguage === "Other" ? "100px" : "0",
-              opacity: mainLanguage === "Other" ? 1 : 0,
-              marginTop: mainLanguage === "Other" ? "8px" : "0"
-            }}>
-              <input
-                type="text"
-                placeholder="Enter language manually"
-                style={styles.input}
-                value={manualMain}
-                onChange={(e) => setManualMain(e.target.value)}
-                required={mainLanguage === "Other"}
-              />
-            </div>
-          </div>
-
-          <div style={styles.inputGroup}>
-            <label htmlFor="targetLanguage" style={styles.label}>Language to Learn</label>
-            <select
-              id="targetLanguage"
-              style={styles.input}
-              value={targetLanguage}
-              onChange={(e) => setTargetLanguage(e.target.value)}
-              required
-            >
-              <option value="" disabled>Select language</option>
-              {popularLanguages.map(l => (
-                <option key={l.name} value={l.name}>{l.flag} {l.name}</option>
-              ))}
-              <option value="Other">🌐 Not on the list...</option>
-            </select>
-            <div style={{
-              ...styles.manualInputWrapper,
-              maxHeight: targetLanguage === "Other" ? "100px" : "0",
-              opacity: targetLanguage === "Other" ? 1 : 0,
-              marginTop: targetLanguage === "Other" ? "8px" : "0"
-            }}>
-              <input
-                type="text"
-                placeholder="Enter language manually"
-                style={styles.input}
-                value={manualTarget}
-                onChange={(e) => setManualTarget(e.target.value)}
-                required={targetLanguage === "Other"}
-              />
-            </div>
-          </div>
-
-          <div style={styles.inputGroup}>
-            <label htmlFor="aiApiKey" style={styles.label}>
-              Gemini API Key
-              <span style={{ fontSize: "0.75rem", marginLeft: "5px" }}>
-                (<a href="https://aistudio.google.com/api-keys" target="_blank" rel="noreferrer" style={{ color: "#646cff" }}>get key</a>)
-              </span>
-            </label>
-            <input
-              id="aiApiKey"
-              name="aiApiKey"
-              type="password"
-              autoComplete="one-time-code"
-              data-lpignore="true"
-              data-form-type="other"
-              style={styles.input}
-              value={aiApiKey}
-              onChange={(e) => setAiApiKey(e.target.value)}
-              required
-            />
-          </div>
-
-          <button type="submit" style={styles.button}>Create Account</button>
-        </form>
-
-        <div style={styles.linkText}>
-          Already have an account?
-          <Link to="/login" style={{ color: "#646cff", marginLeft: "5px", textDecoration: "none" }}>Login</Link>
+      <form onSubmit={handleRegister}>
+        <div style={{ marginBottom: '1.2rem' }}>
+          <label htmlFor="username" className="v-label">Username</label>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            autoComplete="username"
+            className="v-input"
+            placeholder="Choose a username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
         </div>
+
+        <div style={{ marginBottom: '1.2rem' }}>
+          <label htmlFor="password" className="v-label">Password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            autoComplete="new-password"
+            className="v-input"
+            placeholder="Create a password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+
+        <div style={{ marginBottom: '1.2rem' }}>
+          <label htmlFor="mainLanguage" className="v-label">Native Language</label>
+          <select
+            id="mainLanguage"
+            className="v-input"
+            value={mainLanguage}
+            onChange={(e) => setMainLanguage(e.target.value)}
+            required
+          >
+            <option value="" disabled>Select language</option>
+            {popularLanguages.map(l => (
+              <option key={l.name} value={l.name}>{l.flag} {l.name}</option>
+            ))}
+            <option value="Other">🌐 Not on the list...</option>
+          </select>
+          {mainLanguage === "Other" && (
+            <input
+              type="text"
+              placeholder="Enter language manually"
+              className="v-input"
+              style={{ marginTop: '8px' }}
+              value={manualMain}
+              onChange={(e) => setManualMain(e.target.value)}
+              required
+            />
+          )}
+        </div>
+
+        <div style={{ marginBottom: '1.2rem' }}>
+          <label htmlFor="targetLanguage" className="v-label">Language to Learn</label>
+          <select
+            id="targetLanguage"
+            className="v-input"
+            value={targetLanguage}
+            onChange={(e) => setTargetLanguage(e.target.value)}
+            required
+          >
+            <option value="" disabled>Select language</option>
+            {popularLanguages.map(l => (
+              <option key={l.name} value={l.name}>{l.flag} {l.name}</option>
+            ))}
+            <option value="Other">🌐 Not on the list...</option>
+          </select>
+          {targetLanguage === "Other" && (
+            <input
+              type="text"
+              placeholder="Enter language manually"
+              className="v-input"
+              style={{ marginTop: '8px' }}
+              value={manualTarget}
+              onChange={(e) => setManualTarget(e.target.value)}
+              required
+            />
+          )}
+        </div>
+
+        <div style={{ marginBottom: '1.2rem' }}>
+          <label htmlFor="aiApiKey" className="v-label">
+            Gemini API Key
+            <span style={{ fontSize: "0.75rem", marginLeft: "5px" }}>
+              (<a href="https://aistudio.google.com/api-keys" target="_blank" rel="noreferrer" className="v-link">get key</a>)
+            </span>
+          </label>
+          <input
+            id="aiApiKey"
+            name="aiApiKey"
+            type="password"
+            autoComplete="one-time-code"
+            data-lpignore="true"
+            data-form-type="other"
+            className="v-input"
+            placeholder="Paste your API key"
+            value={aiApiKey}
+            onChange={(e) => setAiApiKey(e.target.value)}
+            required
+          />
+        </div>
+
+        <button type="submit" className="v-btn v-btn-accent">Create Account</button>
+      </form>
+
+      <div style={{ marginTop: "1.5rem", textAlign: "center", fontSize: "0.85rem", color: "var(--text-muted)" }}>
+        Already have an account?
+        <Link to="/login" className="v-link" style={{ marginLeft: "5px", fontWeight: "500" }}>Login</Link>
       </div>
     </div>
   );

@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate, useLoaderData } from 'react-router-dom';
-import { BookOpenText, MessageCircleMore, Clapperboard } from "lucide-react";
+import { BookOpenText, MessageCircleMore, Clapperboard, ChevronDown, ArrowRight } from "lucide-react";
 import TopicPicker from '../components/TopicPicker.jsx';
+import '../assets/Home.css';
 
 function Home() {
   const location = useLocation();
@@ -12,39 +13,107 @@ function Home() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-      if (location.state?.topic) {
-        navigate(location.pathname, { replace: true, state: {} });
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    if (location.state?.topic) {
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+  }, [location, navigate]);
+
   const handleTopicChange = (topic) => {
     changeSelectedTopic(topic);
     setIsOpen(false);
   }
 
+  const isMissionDisabled = !selectedTopic;
+
   return (
-    <div className="home-layout">
+    <main className="home-container">
 
-      <div className="home-content-left">
-        <h1 className="huge-welcome">Welcome to LingoVoyage</h1>
+      {/* Left Column: Branding & Topic Selection */}
+      <div className="v-card welcome-section">
+        <div>
+          <h1 className="welcome-title">JOURNEY<br />BEGINS.</h1>
+        </div>
 
-        <div className="topic-section">
-          <h2>Pick a Topic</h2>
-          <div className="topic-picker">
-            <button className={`topic-button ${selectedTopic === null && "topic-not-selected"}`} onClick={() => setIsOpen(true)}>
-                {selectedTopic ? selectedTopic.title : 'Select Topic'}
-              </button>
-          </div>
+        <div style={{ marginTop: "2rem" }}>
+          <span className="v-label">Current Objective</span>
+          <button
+            className="v-btn v-btn-mission v-btn-gray"
+            style={{ width: "100%", maxWidth: "320px", justifyContent: "space-between" }}
+            onClick={() => setIsOpen(true)}
+          >
+            <span style={{ fontWeight: 500 }}>
+              {selectedTopic ? selectedTopic.title : 'Select Topic'}
+            </span>
+            <ChevronDown size={18} strokeWidth={2.5} />
+          </button>
         </div>
       </div>
 
-      <div className={`home-content-right ${selectedTopic ? '' : 'home-content-right-disabled'}`}>
-        <div onClick={() => navigate('/practice', { state: { topic: selectedTopic } })} className="lesson-button lesson-button-1 lesson-button-disablable"><BookOpenText className="lesson-button-icon" /><span className="lesson-button-text">Practice</span></div>
-        <div onClick={() => navigate('/words_in_context', { state: { topic: selectedTopic } })} className="lesson-button lesson-button-2 lesson-button-disablable"><MessageCircleMore className="lesson-button-icon" /><span className="lesson-button-text">Words in context</span></div>
-        <div onClick={() => navigate('/words_from_videos')} className="lesson-button lesson-button-3"><Clapperboard className="lesson-button-icon" /><span className="lesson-button-text">Learn words from videos</span></div>
+      {/* Right Column: Mission Grid */}
+      <div className="lesson-grid">
+
+        {/* Practice Mission */}
+        <button
+          onClick={() => !isMissionDisabled && navigate('/practice', { state: { topic: selectedTopic } })}
+          className={`v-btn v-btn-mission v-btn-green mission-card ${isMissionDisabled ? 'v-btn-disabled' : ''}`}
+          disabled={isMissionDisabled}
+        >
+          <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+            <div className="mission-icon-box">
+              <BookOpenText size={22} strokeWidth={2.5} />
+            </div>
+            <div className="mission-text">
+              <h3>Practice</h3>
+              <p>Master active vocabulary recall.</p>
+            </div>
+          </div>
+          <ArrowRight className="arrow-icon" size={18} strokeWidth={3} />
+        </button>
+
+        {/* Words in Context Mission */}
+        <button
+          onClick={() => !isMissionDisabled && navigate('/words_in_context', { state: { topic: selectedTopic } })}
+          className={`v-btn v-btn-mission v-btn-blue mission-card ${isMissionDisabled ? 'v-btn-disabled' : ''}`}
+          disabled={isMissionDisabled}
+        >
+          <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+            <div className="mission-icon-box">
+              <MessageCircleMore size={22} strokeWidth={2.5} />
+            </div>
+            <div className="mission-text">
+              <h3>Words in Context</h3>
+              <p>Fill the blank — choose the best word.</p>
+            </div>
+          </div>
+          <ArrowRight className="arrow-icon" size={18} strokeWidth={3} />
+        </button>
+
+        {/* Video Immersion (Always enabled in your original logic) */}
+        <button
+          onClick={() => navigate('/words_from_videos')}
+          className="v-btn v-btn-mission v-btn-red mission-card"
+        >
+          <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+            <div className="mission-icon-box">
+              <Clapperboard size={22} strokeWidth={2.5} />
+            </div>
+            <div className="mission-text">
+              <h3>Video Immersion</h3>
+              <p>Learn from real-world media.</p>
+            </div>
+          </div>
+          <ArrowRight className="arrow-icon" size={18} strokeWidth={3} />
+        </button>
+
       </div>
-      <TopicPicker isOpen={isOpen} topicList={topics} currentTopic={selectedTopic} changeTopic={handleTopicChange} />
-    </div>
+
+      <TopicPicker
+        isOpen={isOpen}
+        topicList={topics}
+        currentTopic={selectedTopic}
+        changeTopic={handleTopicChange}
+      />
+    </main>
   );
 }
 

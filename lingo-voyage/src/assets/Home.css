@@ -1,0 +1,145 @@
+/* Home Page Specific Styles */
+
+.home-container {
+    width: 100%;
+    max-width: 1100px;
+    /* Adjust margin-top if you have a fixed navbar, e.g., 20px or 100px */
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 30px;
+    padding-bottom: 60px;
+    align-items: stretch;
+}
+
+@media (max-width: 900px) {
+    .home-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.welcome-section {
+    padding: 4rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    min-height: 400px;
+}
+
+.welcome-title {
+    font-size: 4rem;
+    font-weight: 950;
+    line-height: 0.85;
+    letter-spacing: -0.05em;
+    margin: 0;
+    font-style: italic;
+    /* Uses the logo font if available, otherwise sans */
+    font-family: var(--font-logo, sans-serif);
+}
+
+.lesson-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+}
+
+.mission-card {
+    flex: 1;
+    padding: 1.5rem 2rem;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeIn 0.6s ease forwards;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    color: var(--text);
+}
+
+/* Mission Card Internal Elements */
+.mission-icon-box {
+    width: 48px;
+    height: 48px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.mission-text h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+    transition: letter-spacing 0.3s ease;
+}
+
+.mission-text p {
+    margin: 4px 0 0 0;
+    font-size: 0.8rem;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+/* Mission Card Hover Effects */
+.mission-card:hover .mission-icon-box {
+    transform: rotate(-5deg) scale(1.05);
+}
+
+.mission-card:hover .mission-text h3 {
+    letter-spacing: 0.01em;
+}
+
+.mission-card:hover .mission-text p {
+    opacity: 0.9;
+}
+
+/* Shimmer Animation */
+@keyframes shimmerWave {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+.mission-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    pointer-events: none;
+}
+
+.mission-card:hover::before {
+    animation: shimmerWave 0.6s ease-out forwards;
+}
+
+/* Entry Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.mission-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+.mission-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+.mission-card:nth-child(3) {
+    animation-delay: 0.3s;
+}

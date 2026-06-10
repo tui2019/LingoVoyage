@@ -1,6 +1,6 @@
 export async function fetchTopics() {
   try {
-    const res = await fetch("http://localhost:4000/api/topics", {
+    const res = await fetch("http://127.0.0.1:4000/api/topics", {
           credentials: "include"
         });
     const data = await res.json();
